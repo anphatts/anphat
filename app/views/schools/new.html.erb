@@ -1,0 +1,64 @@
+<% if logged_in? && is_admin?(current_user) %>
+    <br/>
+    <br/>
+    <div class="row">
+      <div class="table-responsive col-md-10">
+        <%= form_for :school, :url => update_all_school_path, :html => {:method => :put} do %>
+            <table class="table table-hover table-striped">
+              <tr>
+                <th class="col-md-2">Tên đơn vị</th>
+                <th class="col-md-3">Khối</th>
+                <th class="col-md-3">Đơn vị quản lý</th>
+                <th class="col-md-2">Xóa</th>
+              </tr>
+              <% @schools.each do |school| %>
+                  <%= fields_for "school[]", school do |school_fields| %>
+                      <tr>
+                        <td><%= school_fields.text_field :name %></td>
+                        <td><%= school_fields.collection_select :grade_id, Grade.all, :id, :name %></td>
+                        <td><%= school_fields.collection_select :pdt_id, School.where("grade_id = '5' or grade_id = '7'"), :id, :name %></td>
+                        <td><%= link_to "Xoá", delete_school_path(id: school.id), method: :delete,
+                                        data: { confirm: "Bạn có chắc không?" } %>
+                        </td>
+                      </tr>
+                  <% end %>
+              <% end %>
+            </table>
+            <div class="actions">
+              <%= button_tag "Lưu lại", class: "btn btn-primary btn-md col-md-2 col-md-offset-5" %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+      <div class=col-sm-8>
+        <% if @school && !@school.errors.empty? %>
+            <div class="alert alert-error">
+              <ul>
+                <% @school.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+
+            </div>
+        <% end %>
+        <div class="divider"></div>
+        <%= form_for(:school_new) do |f| %>
+            <%= render 'shared/error_messages' %>
+            <%= f.label :name, "Tên đơn vị" %>
+            <%= f.text_field :name, class: 'form-control' %>
+
+            <%= f.label :grade, "Khối" %>
+            <%= f.collection_select :grade_id, Grade.all, :id, :name, {}, {class: 'form-control'} %>
+
+            <%= f.label :pdt, "Đơn vị quản lý" %>
+            <%= f.collection_select :pdt_id, School.where("grade_id = '5' or grade_id = '7'"), :id, :name, {include_blank: true}, {class: 'form-control'} %>
+
+            <%= button_tag "Thêm", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+<% else %>
+    <h3>Chỉ có admin mới xem được trang này</h3>
+<% end %>

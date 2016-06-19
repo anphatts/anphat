@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="main">
+      <div class="search advanced-search">
+        <h1>
+          <strong><font color="red">Tìm kiếm nâng cao</font> </strong>
+        </h1>
+        <%= form_tag lessons_path, method: 'get', class: "t1-form twitter-form", role: "search" do %>
+            <label>Tên</label><%= text_field_tag :search, nil, class: "form-control", placeholder: "Tên bài giảng" %>
+            <label>Trường</label> <%= collection_select :school, :id, School.all, :id, :name, {include_blank: ""}, {class: "form-control"} %>
+            <label>Lớp</label> <%= collection_select :class, :id, ActiveClass.all, :id, :name, {include_blank: ""}, {class: "form-control"} %>
+            <label>Loại tài
+              liệu</label> <%= collection_select :type, :id, Type.all, :id, :name, {include_blank: ""}, {class: "form-control"} %>
+            <%= button_tag 'Tìm kiếm <i class="glyphicon glyphicon-search"></i></button>'.html_safe, class: "btn btn-primary btn-default" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

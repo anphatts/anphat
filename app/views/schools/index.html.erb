@@ -1,0 +1,85 @@
+<% provide(:title, "#{@school.name}") %>
+<div class="row">
+  <div class="col-md-3">
+    <h4><font color="red">Thư viện bài giảng</font></h4>
+    <ul class="metismenu nav nav-pills nav-stacked" id="menu">
+      <% Type.all.each do |type| %>
+          <li class="inactive">
+            <%= link_to "#{type.name}<span class=\"glyphicon arrow\"></span>".html_safe, {controller: :type, action: 'lessons', type_id: type.id, school_id: @school.id}, remote: true %>
+            <ul class="nav nav-pills nav-stacked" aria-expanded="false">
+              <% @classes.each do |active_class| %>
+                  <li class="inactive">
+                    <% subjects = active_class.subjects %>
+                    <% if subjects.any? %>
+                        <%= link_to "#{active_class.name}<span class=\"glyphicon arrow\"></span>".html_safe, {controller: :class, action: 'lessons', id: active_class.id, school_id: @school.id, type_id: type.id}, remote: true %>
+                        <ul class="nav nav-pills nav-stacked" aria-expanded="false">
+                          <% subjects.each do |subject| %>
+                              <li class="inactive">
+                                <%= link_to "#{subject.subject_name}", {controller: :subject, action: 'lessons', class_id: active_class.id, subject_id: subject.id, school_id: @school.id, type_id: type.id}, remote: true %>
+                              </li>
+                          <% end %>
+                        </ul>
+                    <% else %>
+                        <%= link_to "#{active_class.name}", {controller: :class, action: 'lessons', id: active_class.id, school_id: @school.id, type_id: type.id}, remote: true %>
+                    <% end %>
+                  </li>
+              <% end %>
+            </ul>
+          </li>
+      <% end %>
+    </ul>
+    <div class="divider"></div>
+    <h4><font color="red">Tìm kiếm</font></h4>
+    <nav>
+      <%= form_tag lessons_path, method: 'get', class: "nav navbar-nav navbar-left navbar-form", role: "search" do %>
+          <div class="input-group">
+            <%= text_field_tag :search, nil, class: "form-control", placeholder: "Tìm kiếm", value: @search_content %>
+            <div class="input-group-btn">
+              <div class="dropdown">
+                <%= button_tag '<i class="glyphicon glyphicon-search"></i></button>'.html_safe, class: "btn btn-default" %>
+                <!-- <span class="caret"></span>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to advanced_search_path %></li>
+                    </ul> -->
+              </div>
+            </div>
+          </div>
+      <% end %>
+      <u><%= link_to "Tìm kiếm nâng cao", advanced_search_path %></u>
+    </nav>
+
+    <div class="divider"></div>
+    <h4><font color="red">Thống kê</font></h4>
+    <b>
+      Lượt xem: <%= Impression.count %> </br>
+      Lượt xem hôm nay: <%= Impression.where('created_at between ? and ?', DateTime.now.beginning_of_day, DateTime.now.end_of_day).count %>
+    </b>
+
+  </div>
+  <div class="col-md-9" id="content">
+    <% @type_lessons.each do |type_lesson| %>
+        <div class="row">
+          <h3> <%= link_to "#{type_lesson.type.name}<span class=\"glyphicon arrow\"></span>".html_safe, {controller: :type, action: 'lessons', type_id: type_lesson.type.id, school_id: @school.id}, remote: true %>
+            ( <%= type_lesson.quantity %> ) </h3>
+          <% if type_lesson.lessons.any? %>
+              <div class="row lessons-row">
+                <% type_lesson.lessons.each do |lesson| %>
+                    <div class="col-md-2 portfolio-item lesson-col" id="lesson-<%= lesson.id %>">
+                      <div class="lesson-card">
+                        <div class="lesson-image">
+                          <%= link_to image_tag(lesson.represent_image.url(:thumb)), {controller: :lessons, action: 'details', id: lesson.id}, alt: lesson.name %>
+                        </div>
+                        <div class="lesson-name">
+                          <%= lesson.name %>
+                        </div>
+                      </div>
+                    </div>
+                <% end %>
+              </div>
+          <% else %>
+              <h3 class="no-lesson-info"> Không có bài giảng nào</h3>
+          <% end %>
+        </div>
+    <% end %>
+  </div>
+</div>

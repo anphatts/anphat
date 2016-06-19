@@ -1,0 +1,96 @@
+<% if is_admin?(current_user) %>
+    <br/>
+    <br/>
+    <div class="row">
+      <div class=col-sm-8>
+        <% if @school.nil? %>
+            <%= collection_select(:school, :school_id, School.all, :id, :name, {include_blank: true, selected: nil}, id: "school-select-edit") %>
+        <% else %>
+            <%= collection_select(:school, :school_id, School.all, :id, :name, {include_blank: true, selected: @school.id}, id: "school-select-edit") %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="table-responsive col-md-10">
+        <%= form_for :user, :url => update_all_path, :html => {:method => :put} do %>
+            <table class="table table-hover table-striped">
+              <tr>
+                <th class="col-md-2">Họ và tên</th>
+                <th class="col-md-3">E-Mail</th>
+                <th class="col-md-3">Trường</th>
+                <th class="col-md-2">Vai trò</th>
+                <th class="col-md-2">Xóa</th>
+              </tr>
+              <% schools = School.all %>
+              <% @users.each do |user| %>
+                  <%= fields_for "user[]", user do |user_fields| %>
+                      <tr>
+                        <td><%= user_fields.text_field :name %></td>
+                        <td><%= user_fields.email_field :email %></td>
+                        <td><%= user_fields.collection_select :school_id, schools, :id, :name, {include_blank: true} %></td>
+                        <%= user_fields.fields_for :roles, user.roles.first do |a| %>
+                            <td><%= a.collection_select :id, Role.all, :id, :role, {include_blank: true} %></td>
+                        <% end %>
+                        <td><%= link_to "Xoá", user, method: :delete,
+                                        data: {confirm: "Bạn có chắc không?"} %>
+                        </td>
+                      </tr>
+                  <% end %>
+              <% end %>
+            </table>
+            <div class="actions">
+              <%= button_tag "Lưu lại", class: "btn btn-primary btn-md col-md-2 col-md-offset-5" %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+      <div class=col-sm-8>
+        <button class="btn btn-primary">Tạo tài khoản mới</button>
+        <div class="divider"></div>
+        <%= form_for(:user_new) do |f| %>
+            <% if @created_user && @created_user.errors.any? %>
+                <div id="error_explanation">
+                  <!--<div class="alert alert-danger">-->
+                  <!--The form contains <%= pluralize(@created_user.errors.count, "error") %>.-->
+                  <!--</div>-->
+                  <ul>
+                    <% @created_user.errors.full_messages.each do |msg| %>
+                        <li><%= msg %></li>
+                    <% end %>
+                  </ul>
+                </div>
+            <% end %>
+            <%= f.label :name, "Họ và tên (*)" %>
+            <%= f.text_field :name %>
+
+            <%= f.label :username, "Tên truy nhập (*)" %>
+            <%= f.text_field :username %>
+
+            <%= f.label :email, "Email (*)" %>
+            <%= f.text_field :email %>
+
+            <%= f.label :school, "Đơn vị công tác" %>
+            <% schools = School.all %>
+            <%= f.collection_select :school_id, schools, :id, :name %>
+
+            <%= f.label :role, "Vai trò" %>
+            <%= f.collection_select :role, Role.all, :id, :role %>
+
+            <%= f.label :password, "Mật khẩu (*)" %>
+            <%= f.password_field :password %>
+
+            <%= f.label :password_confirmation, "Gõ lại mật khẩu (*)" %>
+            <%= f.password_field :password_confirmation %>
+
+            <%= button_tag "Tạo tài khoản", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+
+<% else %>
+    <h1>
+      Chỉ có admin mới xem được trang này
+    </h1>
+<% end %>

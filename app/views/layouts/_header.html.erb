@@ -1,0 +1,76 @@
+<header class="navbar">
+  <div class="container">
+    <div class="row">
+      <div class="banner">
+        <%= image_tag("banner.png", alt: "Banner") %>
+        <h2>
+          <span>
+          <% if @school %>
+            <%= link_to "#{@school.name}", school_view_path(@school.slug)%>
+          <% end %>
+          </span>
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-md-12">
+        <nav>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- <li><%= link_to "Trang chủ", root_path %></li> -->
+
+            <!-- Drop down menu of schools -->
+            <% Grade.all.each do |grade| %>
+                <li class="dropdown">
+                  <a href="#" data-toggle="dropdown" class="dropdown-toggle"> <%= grade.name %></a>
+                  <% if @phongdaotao %>
+                      <% schools = grade.schools.where('pdt_id = ? OR grade_id = 5 or grade_id = 7', @phongdaotao.id) %>
+                  <% else %>
+                      <% schools = grade.schools %>
+                  <% end %>
+                  <% if schools.any? %>
+                      <ul class="dropdown-menu">
+                        <% schools.each do |school| %>
+                            <li><%= link_to school.name, school_view_path(school.slug) %></li>
+                        <% end %>
+                      </ul>
+                  <% end %>
+                </li>
+            <% end %>
+
+            <% if logged_in? %>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <%= current_user.name %> <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><%= link_to "Hộp thư", inbox_path %></li>
+                    <li><%= link_to "Tài liệu tải về", list_of_downloads_path(username: current_user.username) %></li>
+                    <li><%= link_to "Tài liệu tải lên", current_user %></li>
+                    <% if is_teacher?(current_user) %>
+                        <li><%= link_to "Upload tài liệu", controller: "lessons", action: "new" %></li>
+                    <% end %>
+                    <% if is_manager?(current_user) %>
+                        <li><%= link_to "Duyệt bài giảng", approve_path %></li>
+                    <% end %>
+                    <% if is_admin?(current_user) %>
+                        <li><%= link_to "Quản lý người dùng", edit_all_path %></li>
+                        <li><%= link_to "Quản lý danh sách trường học", school_new_path %></li>
+                    <% end %>
+                    <li class="divider"></li>
+                    <li>
+                      <%= link_to "Đổi mật khẩu", change_password_path %>
+                    </li>
+                    <li>
+                      <%= link_to "Đăng xuất", logout_path, method: "delete" %>
+                    </li>
+                  </ul>
+                </li>
+            <% else %>
+                <li><%= link_to "Đăng nhập", login_path %></li>
+            <% end %>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>

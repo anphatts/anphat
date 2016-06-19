@@ -1,0 +1,28 @@
+<% provide(:title, "Hộp thư") %>
+<% if logged_in? %>
+    <br/>
+    <br/>
+    <div class="row">
+      <div class="table-responsive col-sm-8">
+        <table class="table table-hover table-striped">
+          <tr>
+            <th class="col-md-6">Tiêu đề</th>
+            <th class="col-md-3">Người gửi</th>
+            <th class="col-md-3">Ngày gửi</th>
+          </tr>
+          <% @lessons.each do |lesson| %>
+              <tr>
+                <td><%= link_to lesson.name, {controller: "lessons", action: "details", id: lesson.id} %></td>
+                <td><%= lesson.user.name %></td>
+                <td><%= lesson.created_at.strftime("%Y-%m-%d") %></td>
+              </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+<% else %>
+    <h1>
+      Bạn phải <%= link_to "đăng nhập", login_path %> mới xem được trang này
+    </h1>
+<% end %>

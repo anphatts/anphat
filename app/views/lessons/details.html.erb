@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="col-md-3">
+    <h4><font color="red">Thư viện bài giảng</font></h4>
+    <ul class="metismenu nav nav-pills nav-stacked" id="menu">
+      <% Type.all.each do |type| %>
+          <li class="inactive">
+            <%= link_to "#{type.name}<span class=\"glyphicon arrow\"></span>".html_safe, {controller: :type, action: 'lessons', type_id: type.id, school_id: @school.id}, remote: true %>
+            <ul class="nav nav-pills nav-stacked" aria-expanded="false">
+              <% @classes.each do |active_class| %>
+                  <li class="inactive">
+                    <% subjects = active_class.subjects %>
+                    <% if subjects.any? %>
+                        <%= link_to "#{active_class.name}<span class=\"glyphicon arrow\"></span>".html_safe, {controller: :class, action: 'lessons', id: active_class.id, school_id: @school.id, type_id: type.id}, remote: true %>
+                        <ul class="nav nav-pills nav-stacked" aria-expanded="false">
+                          <% subjects.each do |subject| %>
+                              <li class="inactive">
+                                <%= link_to "#{subject.subject_name}", {controller: :subject, action: 'lessons', class_id: active_class.id, subject_id: subject.id, school_id: @school.id, type_id: type.id}, remote: true %>
+                              </li>
+                          <% end %>
+                        </ul>
+                    <% else %>
+                        <%= link_to "#{active_class.name}", {controller: :class, action: 'lessons', id: active_class.id, school_id: @school.id, type_id: type.id}, remote: true %>
+                    <% end %>
+                  </li>
+              <% end %>
+            </ul>
+          </li>
+      <% end %>
+    </ul>
+    <div class="divider"></div>
+    <h4><font color="red">Tìm kiếm</font></h4>
+    <nav>
+      <%= form_tag lessons_path, method: 'get', class: "nav navbar-nav navbar-left navbar-form", role: "search" do %>
+          <div class="input-group">
+            <%= text_field_tag :search, nil, class: "form-control", placeholder: "Tìm kiếm", value: @search_content %>
+            <div class="input-group-btn">
+              <div class="dropdown">
+                <%= button_tag '<i class="glyphicon glyphicon-search"></i></button>'.html_safe, class: "btn btn-default" %>
+                <!-- <span class="caret"></span>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to advanced_search_path %></li>
+                    </ul> -->
+              </div>
+            </div>
+          </div>
+      <% end %>
+      <u><%= link_to "Tìm kiếm nâng cao", advanced_search_path %></u>
+    </nav>
+
+    <div class="divider"></div>
+    <h4><font color="red">Thống kê</font></h4>
+    <b>
+      Lượt xem: <%= Impression.count %> </br>
+      Lượt xem hôm
+      nay: <%= Impression.where('created_at between ? and ?', DateTime.now.beginning_of_day, DateTime.now.end_of_day).count %>
+    </b>
+
+  </div>
+
+  <div class="col-md-9" id="content">
+    <div class="row" data-no-turbolink>
+      <div class="col-md-7">
+        <% if @lesson.type_id == 1 %>
+            <%= link_to image_tag(@lesson.represent_image.url(:thumb)), {controller: :lessons, action: 'show', id: @lesson.id} %>
+            <%= link_to "Xem", "/uploads/#{@lesson.id}/index.htm", class: 'btn btn-primary', target: "_blank" %>
+        <% else %>
+            <% file = @lesson.url.path %>
+            <% extension = File.extname(file).downcase %>
+            <%= link_to image_tag(@lesson.represent_image.url(:thumb)), "#", class: "lesson-view-popup" %>
+            <div id="element_to_pop_up">
+              <% if extension == ".swf" %>
+                  <embed width="800" height="600" src="<%= @lesson.url.url %>"
+                         type="application/x-shockwave-flash"
+                         allowScriptAccess="always"/>
+              <% elsif extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".gif" %>
+                  <%= image_tag @lesson.url.url, alt: @lesson.name %>
+              <% elsif extension == ".mp4" || extension == ".flv" %>
+                  <video id="video-lesson" width="800" height="600" preload="auto" controls>
+                    <source src="<%= @lesson.url.url %>" type="video/mp4">
+                    <source src="movie.ogg" type="video/ogg">
+                    Your browser does not support the video tag.
+                  </video>
+              <% elsif extension == ".mp3" || extension == ".wma" %>
+                  <audio id="audio-lesson" style="width: 800px; height:200px" controls>
+                    <source src=<%= @lesson.url.url %> type="audio/mpeg">
+                    Your browser does not support the audio element.
+                  </audio>
+            <% end %>
+            </div>
+        <% end %>
+        <% if logged_in? %>
+            <%= link_to "Download", download_lesson_path(id: @lesson.id), class: 'btn btn-primary' %>
+        <% end %>
+        <% if (is_manager?(current_user) && current_user.school_id == @lesson.user.school_id) || is_admin?(current_user) %>
+            <%= link_to "Xoá", @lesson, class: 'btn btn-primary', method: :delete,
+                        data: {confirm: "Bạn có chắc muốn xóa bài giảng này không?"} %>
+        <% end %>
+      </div>
+      <div class="col-md-5">
+        <span><b> Tiêu đề: </b><%= @lesson.name %> </span> </br>
+        <span><b> Người gửi: </b><%= @lesson.user.name %> </span> </br>
+        <span><b> Ngày gửi: </b><%= @lesson.created_at.strftime("%Y-%m-%d") %> </span> </br>
+        <span><b> Lượt xem: </b><%= @lesson.impressionist_count(:filter => :session_hash) %> </span> </br>
+        <span><b> Lượt tải: </b><%= @downloads_count %> </span> </br>
+        <span><b> Dung lượng: </b><%= @filesize %> MB </span> </br>
+        <% if @lesson.approved %>
+            <span><b> Tình trạng: </b>Đã duyệt </span> </br>
+            <span><b> Người duyệt: </b><%= @lesson.approver.name %></span>
+        <% else %>
+            <span><b> Tình trạng: </b>Chưa duyệt </span> </br>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8">
+        <%= commontator_thread(@lesson) %>
+      </div>
+    </div>
+  </div>
+</div>

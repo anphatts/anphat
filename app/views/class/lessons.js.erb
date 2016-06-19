@@ -1,0 +1,5 @@
+<% provide(:title, @class.name) %>
+
+var html = "<%= j render partial: 'lessons/lesson', locals: {lessons: @lessons} %>";
+
+$('#content').html(html);

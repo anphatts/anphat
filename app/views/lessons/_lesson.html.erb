@@ -1,0 +1,21 @@
+<div class="row lessons-row">
+  <% lessons.each do |lesson| %>
+
+      <div class="col-md-2 portfolio-item lesson-col" id="lesson-<%= lesson.id %>">
+        <div class="lesson-card">
+          <div class="lesson-image">
+            <%= link_to image_tag(lesson.represent_image.url(:thumb)), {controller: "lessons", action: "details", id: lesson.id}, alt: lesson.name %>
+          </div>
+          <!--<span class="timestamp">-->
+          <!--Uploaded <%= time_ago_in_words(lesson.created_at) %> ago.-->
+          <!--</span>-->
+          <div class="lesson-name">
+            <%= link_to lesson.name, {controller: "lessons", action: "details", id: lesson.id}, alt: lesson.name %>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
+<div class="row">
+  <%= js_will_paginate lessons %>
+</div>

@@ -1,0 +1,30 @@
+<% @class_lessons.each do |class_lesson| %>
+    <div class="row">
+      <% if @school %>
+          <h3> <%= link_to "#{class_lesson.class.name}<span class=\"glyphicon arrow\"></span>".html_safe, {controller: :class, action: 'lessons', id: class_lesson.class.id, school_id: @school.id, type_id: @type_id}, remote: true %>
+            ( <%= class_lesson.quantity %> ) </h3>
+      <% else %>
+          <h3> <%= link_to "#{class_lesson.class.name}<span class=\"glyphicon arrow\"></span>".html_safe, {controller: :class, action: 'lessons', id: class_lesson.class.id, type_id: @type_id}, remote: true %>
+            ( <%= class_lesson.quantity %> ) </h3>
+      <% end %>
+      <% if class_lesson.lessons.any? %>
+          <div class="row lessons-row">
+            <% class_lesson.lessons.each do |lesson| %>
+
+                <div class="col-md-2 portfolio-item lesson-col" id="lesson-<%= lesson.id %>">
+                  <div class="lesson-card">
+                    <div class="lesson-image">
+                      <%= link_to image_tag(lesson.represent_image.url(:thumb)), {controller: :lessons, action: 'details', id: lesson.id}, alt: lesson.name %>
+                    </div>
+                    <div class="lesson-name">
+                      <%= lesson.name %>
+                    </div>
+                  </div>
+                </div>
+            <% end %>
+          </div>
+      <% else %>
+          <h3 class="no-lesson-info"> Không có bài giảng nào</h3>
+      <% end %>
+    </div>
+<% end %>

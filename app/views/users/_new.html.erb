@@ -1,0 +1,23 @@
+<%= form_for(user) do |f| %>
+    <%= render 'shared/error_messages' %>
+    <%= f.label :name, "Họ và tên (*)" %>
+    <%= f.text_field :name, class: 'form-control' %>
+
+    <%= f.label :username, "Tên truy nhập (*)" %>
+    <%= f.text_field :username, class: 'form-control' %>
+
+    <%= f.label :email, "Email (*)" %>
+    <%= f.text_field :email, class: 'form-control' %>
+
+    <%= f.label :school, "Đơn vị công tác" %>
+    <% schools = School.all %>
+    <%= f.collection_select :school_id, schools, :id, :name, {include_blank: true}, {class: 'form-control'} %>
+
+    <%= f.label :password, "Mật khẩu (*)" %>
+    <%= f.password_field :password, class: 'form-control' %>
+
+    <%= f.label :password_confirmation, "Gõ lại mật khẩu (*)" %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+    <%= button_tag "Tạo tài khoản", class: "btn btn-primary" %>
+<% end %>

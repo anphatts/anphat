@@ -1,0 +1,126 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  hello: "Hello world"
+  activerecord:
+      attributes:
+        user:
+          name: "Họ và tên"
+          username: "Tên đăng nhập"
+          password: "Mật khẩu"
+          password_confirmation: "Gõ lại mật khẩu"
+          email: "Địa chỉ email"
+        lesson:
+          name: "Tiêu đề"
+          url: "File dữ liệu"
+          class_id: "Lớp"
+          represent_image: "Ảnh đại diện"
+        school:
+          name: "Tên trường"
+          grade_id: "Khối"
+        commontator/comment:
+          body: "Bình luận"
+      errors:
+        models:
+          user:
+            attributes:
+              email:
+                blank: "không được để trống"
+                invalid: "không hợp lệ"
+                too_short: "quá ngắn"
+                too_long: "quá dài"
+              name:
+                blank: "không được để trống"
+              username:
+                blank: "không được để trống"
+                taken: "đã được sử dụng"
+              password:
+                blank: "không được để trống"
+                too_short: "quá ngắn"
+                confirmation: "không giống"
+              password_confirmation:
+                confirmation: "không giống mật khẩu đã gõ"
+          lesson:
+            attributes:
+              name:
+                blank: "không được để trống"
+              url:
+                blank: "không được để trống"
+              class_id:
+                blank: "không được để trống"
+          school:
+            attributes:
+              name:
+                blank: "không được để trống"
+                taken: "đã tồn tại"
+              grade_id:
+                blank: "không được để trống"
+          commontator/comment:
+            attributes:
+              body:
+                blank: "không được để trống"
+                taken: "đã giống một bình luận khác"
+
+  # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
+  datetime:
+    distance_in_words:
+      half_a_minute: "nửa phút"
+      less_than_x_seconds:
+        one:   "chưa đến 1 giây"
+        other: "chưa đến %{count} giây"
+      x_seconds:
+        one:   "1 giây"
+        other: "%{count} giây"
+      less_than_x_minutes:
+        one:   "chưa đến 1 phút"
+        other: "chưa đến %{count} phút"
+      x_minutes:
+        one:   "một phút"
+        other: "%{count} phút"
+      about_x_hours:
+        one:   "khoảng 1 giờ"
+        other: "khoảng %{count} giờ"
+      x_days:
+        one:   "1 ngày"
+        other: "%{count} ngày"
+      about_x_months:
+        one:   "khoảng 1 tháng"
+        other: "khoảng %{count} tháng"
+      x_months:
+        one:   "một tháng"
+        other: "%{count} tháng"
+      about_x_years:
+        one:   "khoảng 1 năm"
+        other: "khoảng %{count} năm"
+      over_x_years:
+        one:   "hơn 1 năm"
+        other: "hơn %{count} năm"
+      almost_x_years:
+        one:   "gần 1 năm"
+        other: "khoảng %{count} năm"
+    prompts:
+      year:   "năm"
+      month:  "tháng"
+      day:    "ngày"
+      hour:   "giờ"
+      minute: "phút"
+      second: "giây"

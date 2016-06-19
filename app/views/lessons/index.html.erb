@@ -1,0 +1,34 @@
+<% if is_admin?(current_user) %>
+    <br/>
+    <%= link_to "New Lesson", new_lesson_path, class: "btn btn-primary" %>
+    <br/>
+    <br/>
+
+    <table class="table table-bordered table-striped">
+      <thead>.
+      <tr>
+        <th>Tên</th>
+        <th>Download Link</th>
+        <th></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @lessons.each do |lesson| %>
+
+          <tr>
+            <td><%= lesson.name %></td>
+            <td><%= link_to "Download bài giảng", lesson.url.url %></td>
+            <td><%= button_to "Xóa bài giảng", lesson, method: :delete, class: "btn btn-danger", confirm: "Bạn có chắc muốn xóa \"#{lesson.name}\"?" %></td>
+          </tr>
+
+      <% end %>
+      </tbody>
+
+    </table>
+
+<% else %>
+    <div id="not-admin-div">
+      <h1> Chỉ có admin mới xem được trang này </h1>
+    </div>
+<% end %>
