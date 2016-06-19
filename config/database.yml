@@ -9,10 +9,10 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: elearning
+  database: anphatdb
   pool: 5
   username: root
-  password: root
+  password: anphatts
   host: localhost
 
 # Warning: The database defined as "test" will be erased and
@@ -22,10 +22,10 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: elearning
+  database: anphatdb
   pool: 5
   username: root
-  password: root
+  password: anphatts
   host: localhost
 
 production:
@@ -35,5 +35,5 @@ production:
   database: elearning
   pool: 5
   username: root
-  password: root
+  password: anphatts
   host: localhost
