@@ -93,7 +93,7 @@
         <% end %>
         <% if (is_manager?(current_user) && current_user.school_id == @lesson.user.school_id) || is_admin?(current_user) %>
             <%= link_to "Xoá", @lesson, class: 'btn btn-primary', method: :delete,
-                        data: {confirm: "Bạn có chắc muốn xóa bài giảng này không?"} %>
+                        data: {confirm: "Bạn có chắc muốn xóa tài liệu này không?"} %>
         <% end %>
       </div>
       <div class="col-md-5">

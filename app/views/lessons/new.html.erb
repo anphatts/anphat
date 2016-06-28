@@ -42,7 +42,7 @@
                 <% selected_school = School.first %>
                 <%= f.collection_select :school, School.all, :id, :name, {selected: selected_school.id}, {id: "person_in_charge_school", class: "form-control"} %>
 
-                <%= f.label :persons_in_charge, "Chọn người gửi" %>
+                <%= f.label :persons_in_charge, "Chọn người nhận" %>
                 <%= f.collection_select :persons_in_charge, selected_school.users, :username, :name, {}, {id: "persons-in-charge-name", class: "textarea form-control"} %>
               </div>
 

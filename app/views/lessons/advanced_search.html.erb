@@ -6,7 +6,7 @@
           <strong><font color="red">Tìm kiếm nâng cao</font> </strong>
         </h1>
         <%= form_tag lessons_path, method: 'get', class: "t1-form twitter-form", role: "search" do %>
-            <label>Tên</label><%= text_field_tag :search, nil, class: "form-control", placeholder: "Tên bài giảng" %>
+            <label>Tên</label><%= text_field_tag :search, nil, class: "form-control", placeholder: "Tên tài liệu" %>
             <label>Trường</label> <%= collection_select :school, :id, School.all, :id, :name, {include_blank: ""}, {class: "form-control"} %>
             <label>Lớp</label> <%= collection_select :class, :id, ActiveClass.all, :id, :name, {include_blank: ""}, {class: "form-control"} %>
             <label>Loại tài

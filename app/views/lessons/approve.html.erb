@@ -21,7 +21,7 @@
                         <td><%= lesson.created_at.strftime("%Y-%m-%d") %></td>
                         <td><%= lesson_fields.select :approved, [["Duyệt", 1], ["Không duyệt", 0]], selected: 0 %></td>
                         <td><%= link_to "Xoá", destroy_by_manager_path(id: lesson.id), method: :delete,
-                                        data: {confirm: "Bạn có chắc muốn xóa bài giảng này không?"} %></td>
+                                        data: {confirm: "Bạn có chắc muốn tài liệu này không?"} %></td>
                       </tr>
                   <% end %>
               <% end %>

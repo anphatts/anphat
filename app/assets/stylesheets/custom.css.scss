@@ -33,7 +33,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 2em;
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
@@ -381,4 +381,7 @@ span.picture {
   width: 0px;
   height: 20px;
   background-color: red;
+}
+h3, .h3 {
+  font-size: 18px;
 }

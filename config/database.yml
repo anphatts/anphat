@@ -12,7 +12,7 @@ development:
   database: anphatdb
   pool: 5
   username: root
-  password: anphatts
+  password: 1234
   host: localhost
 
 # Warning: The database defined as "test" will be erased and
@@ -25,7 +25,7 @@ test:
   database: anphatdb
   pool: 5
   username: root
-  password: anphatts
+  password: 1234
   host: localhost
 
 production:

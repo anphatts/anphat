@@ -50,11 +50,11 @@
                         <li><%= link_to "Upload tài liệu", controller: "lessons", action: "new" %></li>
                     <% end %>
                     <% if is_manager?(current_user) %>
-                        <li><%= link_to "Duyệt bài giảng", approve_path %></li>
+                        <li><%= link_to "Duyệt tài liệu", approve_path %></li>
                     <% end %>
                     <% if is_admin?(current_user) %>
                         <li><%= link_to "Quản lý người dùng", edit_all_path %></li>
-                        <li><%= link_to "Quản lý danh sách trường học", school_new_path %></li>
+                        <li><%= link_to "Quản lý đơn vị", school_new_path %></li>
                     <% end %>
                     <li class="divider"></li>
                     <li>
