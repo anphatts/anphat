@@ -305,8 +305,11 @@ INSERT INTO `roles` (`id`, `role`) VALUES
 --
 
 INSERT INTO `types` (`id`, `name`) VALUES
-(1, 'Bài giảng elearning'),
-(2, 'Bài giảng powerpoint'),
+(1, 'Bài giảng learning'),
+(2, 'Bài giảng Powerpoint'),
 (3, 'Giáo án lên lớp'),
-(4, 'Tài liệu giảng dạy');
+(4, 'Thư viện mô phỏng'),
+(5, 'Thư viện hình ảnh')
+(6, 'Thư viện đa phương tiện')
+(7, 'Thư viện đề thi');
 
