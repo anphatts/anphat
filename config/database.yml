@@ -35,5 +35,5 @@ production:
   database: elearning
   pool: 5
   username: root
-  password: anphatts
+  password: Anphat@ts
   host: localhost
