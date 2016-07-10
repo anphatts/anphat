@@ -14,7 +14,7 @@ class StaticPagesController < ApplicationController
       @type.each do |type|
         type_lesson = TypeLesson.new
         type_lesson.type = type
-        if (@school.grade_id == 5)
+        if @school.grade_id == 5
           quantity = Lesson.joins(user: :school).where("schools.pdt_id = ? OR schools.id = ?", @school.id, @school.id).where(type_id: type.id).size
           lessons = Lesson.joins(user: :school).where("schools.pdt_id = ? OR schools.id = ?", @school.id, @school.id).where(type_id: type.id).limit(10)
         else
