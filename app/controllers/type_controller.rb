@@ -10,8 +10,8 @@ class TypeController < ApplicationController
         @classes.each do |active_class|
           class_lesson = ClassLesson.new
           class_lesson.class = active_class
-          quantity = Lesson.joins(user: :school).where(schools: {pdt_id: @school.id}, class_id: active_class.id, type_id: @type_id).size
-          lessons = Lesson.joins(user: :school).where(schools: {pdt_id: @school.id}, class_id: active_class.id, type_id: @type_id).limit(10)
+          quantity = Lesson.joins(user: :school).where("schools.pdt_id = ? OR schools.id = ?", @school.id, @school.id).where(class_id: active_class.id, type_id: @type_id).size
+          lessons = Lesson.joins(user: :school).where("schools.pdt_id = ? OR schools.id = ?", @school.id, @school.id).where(class_id: active_class.id, type_id: @type_id).limit(10)
           class_lesson.quantity = quantity
           class_lesson.lessons = lessons
           @class_lessons.push(class_lesson)

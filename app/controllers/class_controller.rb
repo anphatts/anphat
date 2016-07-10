@@ -15,7 +15,7 @@ class ClassController < ApplicationController
           @lessons = Lesson.joins(:user).where(users: {school_id: params[:school_id]}, class_id: params[:id], type_id: params[:type_id]).paginate(page: params[:page], per_page: 30)
         else
           @class = ActiveClass.find(params[:id])
-          @lessons = Lesson.joins(user: :school).where(schools: {pdt_id: @school.id}, class_id: params[:id], type_id: params[:type_id]).paginate(page: params[:page], per_page: 30)
+          @lessons = Lesson.joins(user: :school).where("schools.pdt_id = ? OR schools.id = ?", @school.id, @school.id).where(class_id: params[:id], type_id: params[:type_id]).paginate(page: params[:page], per_page: 30)
         end
       else
         @class = ActiveClass.find(params[:id])
