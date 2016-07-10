@@ -69,6 +69,11 @@ ready = function () {
 
     $('.lesson-view-popup').bind('click', function (e) {
 
+        $('.loader').show();
+        $('#iframe-obj').load(function(){
+            $('.loader').hide();
+        });
+
         // Prevents the default action to be triggered.
         e.preventDefault();
 
