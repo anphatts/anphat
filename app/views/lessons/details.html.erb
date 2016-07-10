@@ -61,12 +61,13 @@
     <div class="row" data-no-turbolink>
       <div class="col-md-7">
         <% if @lesson.type_id == 1 %>
-            <%= link_to image_tag(@lesson.represent_image.url(:thumb)), {controller: :lessons, action: 'show', id: @lesson.id} %>
+            <%= link_to image_tag(@lesson.represent_image.url(:thumb)), "/uploads/#{@lesson.id}/index.htm", target: "_blank" %>
             <%= link_to "Xem", "/uploads/#{@lesson.id}/index.htm", class: 'btn btn-primary', target: "_blank" %>
         <% else %>
             <% file = @lesson.url.path %>
             <% extension = File.extname(file).downcase %>
             <%= link_to image_tag(@lesson.represent_image.url(:thumb)), "#", class: "lesson-view-popup" %>
+            <div class="btn btn-primary lesson-view-popup">Xem</div>
             <div id="element_to_pop_up">
               <% if extension == ".swf" %>
                   <embed width="800" height="600" src="<%= @lesson.url.url %>"
