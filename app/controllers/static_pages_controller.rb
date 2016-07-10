@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
 
   def home
-    if current_user && current_user.school && current_user.school != 7
+    if current_user && current_user.school && current_user.school.grade_id != 7
       @school = current_user.school
       if @school.grade_id == 5 || @school.grade_id == 7
         @phongdaotao = @school
