@@ -61,9 +61,10 @@
     <div class="row" data-no-turbolink>
       <div class="col-md-7">
         <% if @lesson.type_id == 1 %>
-            <%= link_to image_tag(@lesson.represent_image.url(:thumb)), "/uploads/#{@lesson.id}/index.htm", target: "_blank" %>
-
+            <%= link_to image_tag(@lesson.represent_image.url(:thumb)), "", target: "" %>
+            <% if logged_in? %>
             <%= link_to "Xem", "/uploads/#{@lesson.id}/index.htm", class: 'btn btn-primary', target: "_blank" %>
+            <% end %>
         <% else %>
             <% file = @lesson.url.path %>
             <% extension = File.extname(file).downcase %>
