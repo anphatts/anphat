@@ -62,13 +62,17 @@
       <div class="col-md-7">
         <% if @lesson.type_id == 1 %>
             <%= link_to image_tag(@lesson.represent_image.url(:thumb)), "/uploads/#{@lesson.id}/index.htm", target: "_blank" %>
+
             <%= link_to "Xem", "/uploads/#{@lesson.id}/index.htm", class: 'btn btn-primary', target: "_blank" %>
         <% else %>
             <% file = @lesson.url.path %>
             <% extension = File.extname(file).downcase %>
-            <%= link_to image_tag(@lesson.represent_image.url(:thumb)), "#", class: "lesson-view-popup" %>
+            <%= link_to image_tag(@lesson.represent_image.url(:thumb)), "#", class: "" %>
+            <% if logged_in? %>
             <div class="btn btn-primary lesson-view-popup">Xem</div>
+            <% end %>
             <div id="element_to_pop_up">
+
               <% if extension == ".swf" %>
                   <embed width="800" height="600" src="<%= @lesson.url.url %>"
                          type="application/x-shockwave-flash"
@@ -103,7 +107,8 @@
                       <!-- <iframe id="iframe-obj" src="http://docs.google.com/gview?url=http://apelearning.vn/uploads/lesson/url/13/Tiet_29_Uoc_chung_va_boi_chung531.ppt&embedded=true" style="width:800px; height:600px;" frameborder="0"></iframe> -->
                     </div>
                   </div>
-              <% end %>
+            <% end %>
+
             </div>
         <% end %>
         <% if logged_in? %>
