@@ -11,10 +11,10 @@ ready = function () {
 
 
     $('.upload-class').on('change', function (e) {
-        $('.upload-subject').html("");
         var optionSelected = $("option:selected", this);
         var valueSelected = this.value;
         $.getJSON("/classes/" + valueSelected + "/subjects", function (result) {
+            $('.upload-subject').html("");
             $.each(result, function (i, field) {
                 //$("div").append(field + " ");
                 $('.upload-subject').append(
