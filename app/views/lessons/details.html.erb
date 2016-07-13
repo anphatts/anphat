@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-3">
-    <h4><font color="red">Thư viện bài giảng</font></h4>
+    <h4><font color="red" style="font-weight: bolder">Thư viện Điện tử</font></h4>
     <ul class="metismenu nav nav-pills nav-stacked" id="menu">
       <% Type.all.each do |type| %>
           <li class="inactive">
@@ -28,7 +28,7 @@
       <% end %>
     </ul>
     <div class="divider"></div>
-    <h4><font color="red">Tìm kiếm</font></h4>
+    <h4><font color="red" style="font-weight: bolder">Tìm kiếm</font></h4>
     <nav>
       <%= form_tag lessons_path, method: 'get', class: "nav navbar-nav navbar-left navbar-form", role: "search" do %>
           <div class="input-group">
@@ -48,7 +48,7 @@
     </nav>
 
     <div class="divider"></div>
-    <h4><font color="red">Thống kê</font></h4>
+    <h4><font color="red" style="font-weight: bolder">Thống kê</font></h4>
     <b>
       Lượt xem: <%= Impression.count %> </br>
       Lượt xem hôm
@@ -68,7 +68,7 @@
         <% else %>
             <% file = @lesson.url.path %>
             <% extension = File.extname(file).downcase %>
-            <%= link_to image_tag(@lesson.represent_image.url(:thumb)), "#", class: "" %>
+            <%= image_tag(@lesson.represent_image.url(:thumb))%>
             <% if logged_in? %>
             <div class="btn btn-primary lesson-view-popup">Xem</div>
             <% end %>
