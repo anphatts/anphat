@@ -159,7 +159,9 @@ class LessonsController < ApplicationController
   end
 
   def approve
-    @lessons = Lesson.where(approved: false).order('created_at DESC').paginate(page: params[:page], per_page: 10)
+    if logged_in? && is_manager?(current_user)
+      @lessons = Lesson.joins(:user).where(approved: false).where(users: {school_id: current_user.school_id}).order('created_at DESC').paginate(page: params[:page], per_page: 10)
+    end
   end
 
   def update_approval
@@ -198,6 +200,17 @@ class LessonsController < ApplicationController
     false
   ensure
     zip.close if zip
+  end
+
+  def is_manager?(user)
+    if user.nil?
+      return false
+    end
+    if user.roles.exists?(2)
+      return true
+    else
+      return false
+    end
   end
 
 end
