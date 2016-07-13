@@ -1,7 +1,7 @@
 <% provide(:title, "#{@school.name}") %>
 <div class="row">
   <div class="col-md-3">
-    <h4><font color="red">Thư viện bài giảng</font></h4>
+    <h4><font color="red" style="font-weight: bolder">Thư viện Điện tử</font></h4>
     <ul class="metismenu nav nav-pills nav-stacked" id="menu">
       <% Type.all.each do |type| %>
           <li class="inactive">
@@ -29,7 +29,7 @@
       <% end %>
     </ul>
     <div class="divider"></div>
-    <h4><font color="red">Tìm kiếm</font></h4>
+    <h4><font color="red" style="font-weight: bolder">Tìm kiếm</font></h4>
     <nav>
       <%= form_tag lessons_path, method: 'get', class: "nav navbar-nav navbar-left navbar-form", role: "search" do %>
           <div class="input-group">
@@ -49,7 +49,7 @@
     </nav>
 
     <div class="divider"></div>
-    <h4><font color="red">Thống kê</font></h4>
+    <h4><font color="red" style="font-weight: bolder">Thống kê</font></h4>
     <b>
       Lượt xem: <%= Impression.count %> </br>
       Lượt xem hôm nay: <%= Impression.where('created_at between ? and ?', DateTime.now.beginning_of_day, DateTime.now.end_of_day).count %>
@@ -70,7 +70,7 @@
                           <%= link_to image_tag(lesson.represent_image.url(:thumb)), {controller: :lessons, action: 'details', id: lesson.id}, alt: lesson.name %>
                         </div>
                         <div class="lesson-name">
-                          <%= lesson.name %>
+                          <%= link_to "#{lesson.name}", {controller: :lessons, action: 'details', id: lesson.id}, alt: lesson.name %>
                         </div>
                       </div>
                     </div>

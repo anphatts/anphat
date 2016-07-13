@@ -10,7 +10,7 @@
           <!--Uploaded <%= time_ago_in_words(lesson.created_at) %> ago.-->
           <!--</span>-->
           <div class="lesson-name">
-            <%= link_to lesson.name, {controller: "lessons", action: "details", id: lesson.id}, alt: lesson.name %>
+            <%= link_to "#{lesson.name}", {controller: "lessons", action: "details", id: lesson.id}, alt: lesson.name %>
           </div>
         </div>
       </div>

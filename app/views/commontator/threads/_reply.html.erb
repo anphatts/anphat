@@ -9,7 +9,7 @@
   <% if thread.is_closed? %>
     <p><%= t 'commontator.thread.status.cannot_post' %></p>
   <% elsif !user %>
-    <p>Bạn cần phải <%= link_to "đăng nhập", login_path %> để có thể bình luận </p>
+    <p>Bạn cần phải <%= link_to "đăng nhập", login_path %> để có thể tải tài liệu và bình luận </p>
   <% else %>
     <div id="thread_<%= thread.id %>_new_comment_form_div" class="thread_new_comment_form<%=
     hidden_class %>">

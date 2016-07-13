@@ -17,7 +17,7 @@
                       <%= link_to image_tag(lesson.represent_image.url(:thumb)), {controller: :lessons, action: 'details', id: lesson.id}, alt: lesson.name %>
                     </div>
                     <div class="lesson-name">
-                      <%= lesson.name %>
+                      <%= link_to "#{lesson.name}", {controller: "lessons", action: "details", id: lesson.id}, alt: lesson.name %>
                     </div>
                   </div>
                 </div>
