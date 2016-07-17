@@ -1,0 +1,30 @@
+<% @subject_lessons.each do |subject_lesson| %>
+    <div class="row">
+      <% if @school %>
+          <h3> <%= link_to "#{subject_lesson.subject.subject_name}<span class=\"glyphicon arrow\"></span>".html_safe, {controller: :subject, action: 'lessons', class_id: @class.id, subject_id: subject_lesson.subject.id, type_id: @type_id, school_id: @school.id}, remote: true %>
+            ( <%= subject_lesson.quantity %> ) </h3>
+      <% else %>
+          <h3> <%= link_to "#{subject_lesson.subject.subject_name}<span class=\"glyphicon arrow\"></span>".html_safe, {controller: :subject, action: 'lessons', class_id: @class.id, subject_id: subject_lesson.subject.id, type_id: @type_id}, remote: true %>
+            ( <%= subject_lesson.quantity %> ) </h3>
+      <% end %>
+      <% if subject_lesson.lessons.any? %>
+          <div class="row lessons-row">
+            <% subject_lesson.lessons.each do |lesson| %>
+
+                <div class="col-md-2 portfolio-item lesson-col" id="lesson-<%= lesson.id %>">
+                  <div class="lesson-card">
+                    <div class="lesson-image">
+                      <%= link_to image_tag(lesson.represent_image.url(:thumb)), {controller: :lessons, action: 'details', id: lesson.id}, alt: lesson.name %>
+                    </div>
+                    <div class="lesson-name">
+                      <%= link_to "#{lesson.name}", {controller: "lessons", action: "details", id: lesson.id}, alt: lesson.name %>
+                    </div>
+                  </div>
+                </div>
+            <% end %>
+          </div>
+      <% else %>
+          <h3 class="no-lesson-info"> Dữ liệu đang cập nhật</h3>
+      <% end %>
+    </div>
+<% end %>

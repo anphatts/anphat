@@ -1,5 +1,8 @@
 <% provide(:title, @class.name) %>
-
+<% if @subjects.any? %>
+var html = "<%= j render partial: 'lessons', locals: {subject_lessons: @subject_lessons} %>";
+<% else %>
 var html = "<%= j render partial: 'lessons/lesson', locals: {lessons: @lessons} %>";
+<% end %>
 
 $('#content').html(html);
