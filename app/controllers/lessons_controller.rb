@@ -64,7 +64,7 @@ class LessonsController < ApplicationController
 
         #redirect to lesson_path
         flash[:danger] = nil
-        flash[:success] = "Tải lên baì giảng thành công"
+        flash[:success] = "Tải lên bài giảng thành công"
       end
     end
     @school = current_user.school
@@ -116,7 +116,6 @@ class LessonsController < ApplicationController
     else
       @phongdaotao = @school.phongdaotao
     end
-
     @comments = Comment.where(lesson_id: params[:id])
     commontator_thread_show(@lesson)
 
