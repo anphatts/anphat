@@ -17,13 +17,29 @@
 
               <%= f.label :class_id, "Lớp" %>
               <% selected_class = @classes.first %>
-              <%= f.collection_select :class_id, @classes, :id, :name, {selected: selected_class.id}, {class: 'upload-class form-control'} %>
+              <% if @isCreated %>
+                  <%= f.collection_select :class_id, @classes, :id, :name, {selected: @lesson.class_id}, {class: 'upload-class form-control'} %>
+              <% else %>
+                  <%= f.collection_select :class_id, @classes, :id, :name, {selected: selected_class.id}, {class: 'upload-class form-control'} %>
+              <% end %>
 
               <%= f.label :subject_id, "Môn học" %>
-              <%= f.collection_select :subject_id, selected_class.subjects, :id, :subject_name, {}, {:class => 'upload-subject form-control'} %>
+              <% if @isCreated %>
+                  <% if @lesson.subject_id %>
+                      <%= f.collection_select :subject_id, @lesson.active_class.subjects, :id, :subject_name, {selected: @lesson.subject_id}, {:class => 'upload-subject form-control'} %>
+                  <% else %>
+                      <%= f.collection_select :subject_id, @lesson.active_class.subjects, :id, :subject_name, {}, {:class => 'upload-subject form-control'} %>
+                  <% end %>
+              <% else %>
+                  <%= f.collection_select :subject_id, selected_class.subjects, :id, :subject_name, {}, {:class => 'upload-subject form-control'} %>
+              <% end %>
 
               <%= f.label :type_id, "Loại tài liệu" %>
-              <%= f.collection_select :type_id, Type.all, :id, :name, {}, class: "form-control" %>
+              <% if @isCreated %>
+                  <%= f.collection_select :type_id, Type.all, :id, :name, {selected: @lesson.type_id}, class: "form-control" %>
+              <% else %>
+                  <%= f.collection_select :type_id, Type.all, :id, :name, {}, class: "form-control" %>
+              <% end %>
 
               <%= f.label :attachment, "File dữ liệu" %>
               <%= f.file_field :url %>
@@ -47,7 +63,7 @@
               </div>
 
               </br>
-              <%= f.submit "Tải lên", class: "btn btn-primary", id: "lesson_upload", data: { disable_with: "Đang tải lên..." } %>
+              <%= f.submit "Tải lên", class: "btn btn-primary", id: "lesson_upload", data: {disable_with: "Đang tải lên..."} %>
           <% end %>
         </div>
       </div>
