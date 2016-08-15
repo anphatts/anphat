@@ -63,7 +63,10 @@ ready = function () {
         // success identifies the function to invoke when the server response
         // has been received; here we apply a fade-in effect to the new content
         success: function (xhr) {
+            //$("#status").html(xhr);
             document.write(xhr);
+            document.close();
+
         }
     });
 
