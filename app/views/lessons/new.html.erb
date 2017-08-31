@@ -1,73 +1,77 @@
 <% if current_user %>
-    <div id="status">
-      <% if @lesson && !@lesson.errors.empty? %>
-          <div class="alert alert-error">
-            <ul>
-              <% @lesson.errors.full_messages.each do |msg| %>
-                  <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-      <% end %>
-      <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          <%= form_for :lessons, html: {multipart: true, id: "lesson_new_form"} do |f| %>
-              <%= f.label :name, "Tiêu đề" %>
-              <%= f.text_field :name, class: "form-control" %>
+	<% if @school %>
+		<div id="status">
+		  <% if @lesson && !@lesson.errors.empty? %>
+			  <div class="alert alert-error">
+				<ul>
+				  <% @lesson.errors.full_messages.each do |msg| %>
+					  <li><%= msg %></li>
+				  <% end %>
+				</ul>
+			  </div>
+		  <% end %>
+		  <div class="row">
+			<div class="col-md-6 col-md-offset-3">
+			  <%= form_for :lessons, html: {multipart: true, id: "lesson_new_form"} do |f| %>
+				  <%= f.label :name, "Tiêu đề" %>
+				  <%= f.text_field :name, class: "form-control" %>
 
-              <%= f.label :class_id, "Lớp" %>
-              <% selected_class = @classes.first %>
-              <% if @isCreated %>
-                  <%= f.collection_select :class_id, @classes, :id, :name, {selected: @lesson.class_id}, {class: 'upload-class form-control'} %>
-              <% else %>
-                  <%= f.collection_select :class_id, @classes, :id, :name, {selected: selected_class.id}, {class: 'upload-class form-control'} %>
-              <% end %>
+				  <%= f.label :class_id, "Lớp" %>
+				  <% selected_class = @classes.first %>
+				  <% if @isCreated %>
+					  <%= f.collection_select :class_id, @classes, :id, :name, {selected: @lesson.class_id}, {class: 'upload-class form-control'} %>
+				  <% else %>
+					  <%= f.collection_select :class_id, @classes, :id, :name, {selected: selected_class.id}, {class: 'upload-class form-control'} %>
+				  <% end %>
 
-              <%= f.label :subject_id, "Môn học" %>
-              <% if @isCreated %>
-                  <% if @lesson.subject_id %>
-                      <%= f.collection_select :subject_id, @lesson.active_class.subjects, :id, :subject_name, {selected: @lesson.subject_id}, {:class => 'upload-subject form-control'} %>
-                  <% else %>
-                      <%= f.collection_select :subject_id, @lesson.active_class.subjects, :id, :subject_name, {}, {:class => 'upload-subject form-control'} %>
-                  <% end %>
-              <% else %>
-                  <%= f.collection_select :subject_id, selected_class.subjects, :id, :subject_name, {}, {:class => 'upload-subject form-control'} %>
-              <% end %>
+				  <%= f.label :subject_id, "Môn học" %>
+				  <% if @isCreated %>
+					  <% if @lesson.subject_id %>
+						  <%= f.collection_select :subject_id, @lesson.active_class.subjects, :id, :subject_name, {selected: @lesson.subject_id}, {:class => 'upload-subject form-control'} %>
+					  <% else %>
+						  <%= f.collection_select :subject_id, @lesson.active_class.subjects, :id, :subject_name, {}, {:class => 'upload-subject form-control'} %>
+					  <% end %>
+				  <% else %>
+					  <%= f.collection_select :subject_id, selected_class.subjects, :id, :subject_name, {}, {:class => 'upload-subject form-control'} %>
+				  <% end %>
 
-              <%= f.label :type_id, "Loại tài liệu" %>
-              <% if @isCreated %>
-                  <%= f.collection_select :type_id, Type.all, :id, :name, {selected: @lesson.type_id}, class: "form-control" %>
-              <% else %>
-                  <%= f.collection_select :type_id, Type.all, :id, :name, {}, class: "form-control" %>
-              <% end %>
+				  <%= f.label :type_id, "Loại tài liệu" %>
+				  <% if @isCreated %>
+					  <%= f.collection_select :type_id, Type.all, :id, :name, {selected: @lesson.type_id}, class: "form-control" %>
+				  <% else %>
+					  <%= f.collection_select :type_id, Type.all, :id, :name, {}, class: "form-control" %>
+				  <% end %>
 
-              <%= f.label :attachment, "File dữ liệu" %>
-              <%= f.file_field :url %>
-              <div class="progress">
-                <div class="bar"></div>
-                <div class="percent">0%</div>
-              </div>
+				  <%= f.label :attachment, "File dữ liệu" %>
+				  <%= f.file_field :url %>
+				  <div class="progress">
+					<div class="bar"></div>
+					<div class="percent">0%</div>
+				  </div>
 
-              <%= f.label :represent_image, "Ảnh đại diện" %>
-              <%= f.file_field :represent_image, accept: 'image/png,image/jpeg' %>
+				  <%= f.label :represent_image, "Ảnh đại diện" %>
+				  <%= f.file_field :represent_image, accept: 'image/png,image/jpeg' %>
 
-              <%= f.check_box :isAssignment, id: "assignment-checkbox" %> <label> Gửi tới </label>
+				  <%= f.check_box :isAssignment, id: "assignment-checkbox" %> <label> Gửi tới </label>
 
-              <div id="persons-in-charge-div">
-                <%= f.label :school, "Chọn trường" %>
-                <% selected_school = School.first %>
-                <%= f.collection_select :school, School.all, :id, :name, {selected: selected_school.id}, {id: "person_in_charge_school", class: "form-control"} %>
+				  <div id="persons-in-charge-div">
+					<%= f.label :school, "Chọn trường" %>
+					<% selected_school = School.first %>
+					<%= f.collection_select :school, School.all, :id, :name, {selected: selected_school.id}, {id: "person_in_charge_school", class: "form-control"} %>
 
-                <%= f.label :persons_in_charge, "Chọn người nhận" %>
-                <%= f.collection_select :persons_in_charge, selected_school.users, :username, :name, {}, {id: "persons-in-charge-name", class: "textarea form-control"} %>
-              </div>
+					<%= f.label :persons_in_charge, "Chọn người nhận" %>
+					<%= f.collection_select :persons_in_charge, selected_school.users, :username, :name, {}, {id: "persons-in-charge-name", class: "textarea form-control"} %>
+				  </div>
 
-              </br>
-              <%= f.submit "Tải lên", class: "btn btn-primary", id: "lesson_upload", data: {disable_with: "Đang tải lên..."} %>
-          <% end %>
-        </div>
-      </div>
-    </div>
+				  </br>
+				  <%= f.submit "Tải lên", class: "btn btn-primary", id: "lesson_upload", data: {disable_with: "Đang tải lên..."} %>
+			  <% end %>
+			</div>
+		  </div>
+		</div>
+	<% else %>
+		<h1> Bạn không có quyền đăng tải tài liệu</h1>
+	<% end %>
 <% else %>
     <h1> Bạn phải đăng nhập để đăng tải tài liệu</h1>
 <% end %>
