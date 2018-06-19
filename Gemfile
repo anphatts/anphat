@@ -75,5 +75,11 @@ end
 gem 'textext-rails'
 
 # Use slug for url
+
 gem 'friendly_id', '~> 5.1.0'
+gem "capistrano"
+gem "capistrano3-puma"
+gem "capistrano-rails", require: false
+gem "capistrano-bundler", require: false
+gem "capistrano-rvm"
 gem 'puma'
