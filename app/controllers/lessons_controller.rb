@@ -31,7 +31,7 @@ class LessonsController < ApplicationController
       if eval(lesson_params[:type_id]) == 1
         id = @lesson.id
         if !valid_zip?(@lesson.url.file.path)
-          flash[:danger] = "Bài giảng không hợp lệ"
+          flash.now[:danger] = "Bài giảng không hợp lệ"
           @lesson.destroy
           path_to_lesson = @lesson.url.path
           File.delete(path_to_lesson) if File.exist?(path_to_lesson)
@@ -52,7 +52,7 @@ class LessonsController < ApplicationController
           File.rename("public/uploads/#{id}/index.html", "public/uploads/#{id}/index.htm")
         end
         if !File.exists?("public/uploads/#{id}/index.htm")
-          flash[:danger] = "Bài giảng không hợp lệ"
+          flash.now[:danger] = "Bài giảng không hợp lệ"
           @lesson.destroy
           @lesson = nil
         end
@@ -64,8 +64,7 @@ class LessonsController < ApplicationController
         end
 
         #redirect to lesson_path
-        flash[:danger] = nil
-        flash[:success] = "Tải lên bài giảng thành công"
+        flash.now[:success] = "Tải lên bài giảng thành công"
       end
     end
     @school = current_user.school
@@ -81,7 +80,7 @@ class LessonsController < ApplicationController
     if @lesson.type_id == 1
       FileUtils.rm_rf("public/uploads/#{@lesson.id}") if File.directory?("public/uploads/#{@lesson.id}")
     end
-    flash[:success] = "Bài giảng " + @lesson.name + " đã được xóa thành công"
+    flash.now[:success] = "Bài giảng " + @lesson.name + " đã được xóa thành công"
     redirect_to root_path
   end
 
@@ -93,7 +92,7 @@ class LessonsController < ApplicationController
     if @lesson.type_id == 1
       FileUtils.rm_rf("public/uploads/#{@lesson.id}") if File.directory?("public/uploads/#{@lesson.id}")
     end
-    flash[:success] = "Bài giảng " + @lesson.name + " đã được xóa thành công"
+    flash.now[:success] = "Bài giảng " + @lesson.name + " đã được xóa thành công"
     redirect_to approve_path
   end
 
@@ -169,7 +168,7 @@ class LessonsController < ApplicationController
       @lesson = Lesson.find(id.to_i)
       @lesson.update_columns(approver_id: current_user.id)
       if !@lesson.update_columns(params['lesson'][id].permit(:approved))
-        flash[:success] = Rails.logger.info(@lesson.errors.messages.inspect)
+        flash.now[:success] = Rails.logger.info(@lesson.errors.messages.inspect)
       end
     end
     redirect_to(approve_path)
