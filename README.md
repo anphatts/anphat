@@ -53,18 +53,26 @@ sudo vi /etc/nginx/conf.d/default.conf
      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
      proxy_set_header X-Real-IP $remote_addr;
      proxy_set_header Host $host;
+     proxy_set_header X-Sendfile-Type X-Accel-Redirect;
      proxy_redirect off;
      proxy_set_header Connection '';
      proxy_pass http://app;
      proxy_read_timeout 150;
    }
 
-   location ~ ^/(assets|fonts|system)/|favicon.ico|robots.txt {
+   location ~ ^/(assets|fonts|system|uploads)/|favicon.ico|robots.txt {
+     sendfile on;
      gzip_static on;
      expires max;
      add_header Cache-Control public;
    }
 
+    location /uploads {
+        internal;
+        sendfile on;
+        autoindex         on;
+    }
+    
    error_page 500 502 503 504 /500.html;
    client_max_body_size 4G;
    keepalive_timeout 10;
