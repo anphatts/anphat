@@ -114,7 +114,7 @@
         <% if logged_in? %>
             <%= link_to "Tải về", download_lesson_path(id: @lesson.id), method: :post, class: 'btn btn-primary' %>
         <% end %>
-        <% if (is_manager?(current_user) && current_user.school_id == @lesson.user.school_id) || is_admin?(current_user) %>
+        <% if (is_manager?(current_user) && current_user.school_id == @lesson.user.school_id) %>
             <%= link_to "Xoá", @lesson, class: 'btn btn-primary', method: :delete,
                         data: {confirm: "Bạn có chắc muốn xóa tài liệu này không?"} %>
         <% end %>
