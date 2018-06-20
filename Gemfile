@@ -58,7 +58,7 @@ gem 'jquery-turbolinks'
 
 gem 'mini_magick'
 
-gem 'impressionist'
+gem 'impressionist', '1.5.1'
 
 # use comments
 gem 'commontator'
