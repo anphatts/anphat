@@ -86,7 +86,7 @@ Tript::Application.routes.draw do
 
   get '/lessons' => 'lessons#search'
   get '/lessons/:id' => 'lessons#show'
-  get '/lessons/downloads/:id', to: 'lessons#download', as: :download_lesson
+  post '/lessons/downloads/:id', to: 'lessons#download', as: :download_lesson
   get '/details/:id' => 'lessons#details'
   post '/lessons/new' => 'lessons#create'
   delete 'lessons/:id' => 'lessons#destroy'
