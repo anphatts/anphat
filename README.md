@@ -26,6 +26,7 @@ bundle install
 ## Setup nginx
 * Install it
 ```
+sudo yum install epel-release
 sudo yum install nginx
 ```
 * Create file default.conf
