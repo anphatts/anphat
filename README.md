@@ -12,6 +12,7 @@
 * RVM
 * Ruby
 * Rails
+* Nodejs
 
 ## Set up capistrano
 
